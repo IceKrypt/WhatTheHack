@@ -13,6 +13,7 @@ using WhatTheHack.Comps;
 using WhatTheHack.ThinkTree;
 using WhatTheHack.Storage;
 using CombatExtended;
+
 namespace WhatTheHack.Buildings
 {
     public class Building_RogueAI : Building
@@ -330,7 +331,7 @@ namespace WhatTheHack.Buildings
             {
                 DrainMood(moodDrainCtrlMech);
             }
-            foreach(Building_TurretGun turret in controlledTurrets)
+            foreach(Building_TurretGunCE turret in controlledTurrets)
             {
                 DrainMood(moodDrainCtrlTur);
             }

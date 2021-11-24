@@ -13,5 +13,5 @@ This mod depends on Hugslib. Load order should be: Hugslib -> What the Hack!?.
     <loadAfter>
 	  <li>UnlimitedHugs.HugsLib</li>
     </loadAfter>
-	<packageId>roolo.whatthehack_CE</packageId>
+	<packageId>roolo.whatthehack</packageId>
 </ModMetaData>

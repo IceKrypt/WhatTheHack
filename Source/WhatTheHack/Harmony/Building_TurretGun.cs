@@ -7,13 +7,14 @@ using System.Text;
 using Verse;
 using WhatTheHack.Buildings;
 using WhatTheHack.Comps;
+using CombatExtended;
 
 namespace WhatTheHack.Harmony
 {
-    [HarmonyPatch(typeof(Building_TurretGun), "Tick")]
-    class Building_TurretGun_Tick
+    [HarmonyPatch(typeof(Building_TurretGunCE), "Tick")]
+    class Building_TurretGunCE_Tick
     {
-        static void Postfix(Building_TurretGun __instance)
+        static void Postfix(Building_TurretGunCE __instance)
         {
             if (__instance.GetComp<CompMountable>() is CompMountable comp && comp.Active)
             {
@@ -40,10 +41,10 @@ namespace WhatTheHack.Harmony
             return true;
         }
     }
-    [HarmonyPatch(typeof(Building_TurretGun), "get_CanSetForcedTarget")]
+    [HarmonyPatch(typeof(Building_TurretGunCE), "get_CanSetForcedTarget")]
     class Building_TurretGun_get_CanSetForcedTarget
     {
-        static void Postfix(Building_TurretGun __instance, ref bool __result)
+        static void Postfix(Building_TurretGunCE __instance, ref bool __result)
         {
 
             if (Base.Instance.GetExtendedDataStorage().GetExtendedDataFor(__instance.Map).rogueAI is Building_RogueAI rogueAI)
@@ -55,10 +56,10 @@ namespace WhatTheHack.Harmony
             }
         }
     }
-    [HarmonyPatch(typeof(Building_TurretGun), "DrawExtraSelectionOverlays")]
+    [HarmonyPatch(typeof(Building_TurretGunCE), "DrawExtraSelectionOverlays")]
     class Building_TurretGun_DrawExtraSelectionOverlays
     {            
-        static void Postfix(Building_TurretGun __instance)
+        static void Postfix(Building_TurretGunCE __instance)
         {
             if (Base.Instance.GetExtendedDataStorage().GetExtendedDataFor(__instance.Map).rogueAI is Building_RogueAI controller)
             {

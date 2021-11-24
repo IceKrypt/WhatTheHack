@@ -13,6 +13,7 @@ using WhatTheHack.Comps;
 using WhatTheHack.Recipes;
 using UnityEngine;
 using System.Diagnostics;
+using CombatExtended;
 
 namespace WhatTheHack
 {
