@@ -12,7 +12,7 @@ using CombatExtended;
 namespace WhatTheHack.Harmony
 {
     [HarmonyPatch(typeof(Building_TurretGunCE), "Tick")]
-    class Building_TurretGun_Tick
+    class Building_TurretGunCE_Tick
     {
         static void Postfix(Building_TurretGunCE __instance, TurretTop ___top)
         {
@@ -56,7 +56,7 @@ namespace WhatTheHack.Harmony
         }
     }
     [HarmonyPatch(typeof(Building_TurretGunCE), "DrawExtraSelectionOverlays")]
-    class Building_TurretGun_DrawExtraSelectionOverlays
+    class Building_TurretGunCE_DrawExtraSelectionOverlays
     {            
         static void Postfix(Building_TurretGunCE __instance)
         {
