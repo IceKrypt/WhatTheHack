@@ -8,6 +8,7 @@ using UnityEngine;
 using Verse;
 using WhatTheHack.Buildings;
 using WhatTheHack.Comps;
+using CombatExtended;
 
 namespace WhatTheHack.Harmony
 {
@@ -86,7 +87,7 @@ namespace WhatTheHack.Harmony
                 {
                     GenDraw.DrawLineBetween(rogueAI.Position.ToVector3Shifted(), pawn.Position.ToVector3Shifted(), SimpleColor.Red);
                 }
-                foreach (Building_TurretGun t in rogueAI.controlledTurrets)
+                foreach (Building_TurretGunCE t in rogueAI.controlledTurrets)
                 {
                     GenDraw.DrawLineBetween(rogueAI.Position.ToVector3Shifted(), t.Position.ToVector3Shifted(), SimpleColor.Green);
                 }

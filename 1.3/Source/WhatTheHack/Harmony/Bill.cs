@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using Verse;
 using WhatTheHack.Comps;
+using CombatExtended;
 
 namespace WhatTheHack.Harmony
 {
@@ -35,7 +36,7 @@ namespace WhatTheHack.Harmony
             {
                 Predicate<Thing> isMounted = (Thing t) => t.TryGetComp<CompMountable>() is CompMountable comp && comp.Active;
                 Thing thing = pawn.Map.spawnedThings.FirstOrDefault(
-                    (Thing t) => (t.GetInnerIfMinified() is Building_TurretGun) &&
+                    (Thing t) => (t.GetInnerIfMinified() is Building_TurretGunCE) &&
                     bill.IsFixedOrAllowedIngredient(t) &&
                     pawn.CanReach(t, Verse.AI.PathEndMode.Touch, Danger.Deadly) &&
                     !t.IsForbidden(pawn) &&

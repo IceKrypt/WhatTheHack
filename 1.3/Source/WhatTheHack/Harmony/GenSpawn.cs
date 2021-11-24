@@ -9,6 +9,7 @@ using System.Text;
 using Verse;
 using WhatTheHack.Comps;
 using WhatTheHack.Storage;
+using CombatExtended;
 
 namespace WhatTheHack.Harmony
 {
@@ -18,7 +19,7 @@ namespace WhatTheHack.Harmony
     {
         static bool Prefix(ref Thing newThing, ref WipeMode wipeMode, bool respawningAfterLoad)
         {
-            if (newThing is Building_TurretGun && respawningAfterLoad)
+            if (newThing is Building_TurretGunCE && respawningAfterLoad)
             {
                 if (newThing.TryGetComp<CompMountable>() is CompMountable comp && comp.Active)
                 {

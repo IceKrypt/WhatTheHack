@@ -9,6 +9,7 @@ using Verse;
 using Verse.AI;
 using WhatTheHack.Needs;
 using WhatTheHack.Storage;
+using CombatExtended;
 
 namespace WhatTheHack.Comps
 {
@@ -74,7 +75,7 @@ namespace WhatTheHack.Comps
 
         private void LetMountedToWaitIfReserved()
         {
-            Building_TurretGun turret = (Building_TurretGun)parent;
+            Building_TurretGunCE turret = (Building_TurretGunCE)parent;
             if (turret.Map != null && turret.Map.reservationManager.IsReservedByAnyoneOf(turret, Faction.OfPlayer))
             {
                 if (mountedTo.CurJobDef != JobDefOf.Wait_Combat && mountedTo.CurJobDef != WTH_DefOf.WTH_Mechanoid_Rest)

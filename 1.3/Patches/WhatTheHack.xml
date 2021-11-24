@@ -73,11 +73,36 @@
 	<mods>
 		<li>Combat Extended</li>
 	</mods>
-	<match Class ="PatchOperationAdd">
-		<xpath>Defs/DutyDef[defName="WTH_SearchAndDestroy"]/thinkNode[@Class="ThinkNode_Priority"]/subNodes</xpath>
-		<value>
-			<li Class="CombatExtended.JobGiver_TakeAndEquip"/>
-		</value>
+	<match Class="PatchOperationSequence">
+		<operations>
+			<li Class="PatchOperationAdd">
+				<xpath>Defs/DutyDef[defName="WTH_SearchAndDestroy"]/thinkNode[@Class="ThinkNode_Priority"]/subNodes</xpath>
+				<value>
+					<li Class="CombatExtended.JobGiver_TakeAndEquip"/>
+				</value>
+			</li>
+			<li Class="PatchOperationRemove">
+				<xpath>Defs/HediffDef[defName="WTH_ArmorModule"]/modExtensions/li[@Class="WhatTheHack.DefModExtension_Hediff"]/armorOffset</xpath>
+			</li>
+			<li Class="PatchOperationAdd">
+				<xpath>Defs/HediffDef[defName="WTH_ArmorModule"]/stages/li</xpath>
+				<value>
+					<statOffsets>
+						<ArmorRating_Sharp>8</ArmorRating_Sharp>
+						<ArmorRating_Blunt>12</ArmorRating_Blunt>
+						<BodyPartSharpArmor>2</BodyPartSharpArmor>
+						<BodyPartBluntArmor>4</BodyPartBluntArmor>
+						<ArmorRating_Heat>0.1</ArmorRating_Heat>
+					</statOffsets>
+				</value>
+			</li>
+			<li Class="PatchOperationReplace">
+				<xpath>Defs/ThingDef[defName="WTH_ArmorModule"]/statBases/Mass</xpath>
+				<value>
+					<Mass>40</Mass>
+				</value>
+			</li>
+		</operations>
 	</match>
 </Operation>
 
@@ -169,12 +194,25 @@
 	</operations>
 </Operation>
 
-<Operation Class="PatchOperationAdd">
-	<xpath>Defs/ThingDef[(thingClass = "Building_TurretGun" or thingClass = "CombatExtended.Building_TurretGunCE") and minifiedDef]/comps</xpath>
-	<value>
-		<li Class="WhatTheHack.Comps.CompProperties_Mountable"></li>
-	</value>
-</Operation> 
+<Operation Class="PatchOperationConditional">
+	<xpath>Defs/ThingDef[(thingClass = "Building_TurretGun" and minifiedDef) or thingClass = "CombatExtended.Building_TurretGunCE"]/comps</xpath>
+	<nomatch Class="PatchOperationAdd">
+		<xpath>Defs/ThingDef[(thingClass = "Building_TurretGun" and minifiedDef) or thingClass = "CombatExtended.Building_TurretGunCE"]</xpath>
+		<value>
+			<comps>
+				<li Class="WhatTheHack.Comps.CompProperties_Mountable" />
+			</comps>
+		</value>
+	</nomatch>
+	<match Class="PatchOperationAdd">
+		<xpath>Defs/ThingDef[(thingClass = "Building_TurretGun" and minifiedDef) or thingClass = "CombatExtended.Building_TurretGunCE"]/comps</xpath>
+		<value>
+			<li Class="WhatTheHack.Comps.CompProperties_Mountable" />
+		</value>
+	</match>
+</Operation>
+
+
 <Operation Class="PatchOperationSequence">
 	<success>Always</success>
 	<operations>

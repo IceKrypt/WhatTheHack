@@ -12,7 +12,7 @@ using Verse.AI.Group;
 using WhatTheHack.Comps;
 using WhatTheHack.ThinkTree;
 using WhatTheHack.Storage;
-
+using CombatExtended;
 namespace WhatTheHack.Buildings
 {
     public class Building_RogueAI : Building
@@ -25,8 +25,8 @@ namespace WhatTheHack.Buildings
         public List<Pawn> hackedMechs = new List<Pawn>();
         public List<Pawn> rogueMechs = new List<Pawn>();
 
-        public List<Building_TurretGun> controlledTurrets = new List<Building_TurretGun>();
-        public List<Building_TurretGun> rogueTurrets = new List<Building_TurretGun>();
+        public List<Building_TurretGunCE> controlledTurrets = new List<Building_TurretGunCE>();
+        public List<Building_TurretGunCE> rogueTurrets = new List<Building_TurretGunCE>();
         private List<ActionItem> queuedActions = new List<ActionItem>();
         private int abilityWarmUpTicks = 0;
         private int currentAbilityTicksTotal = 0;
@@ -234,7 +234,7 @@ namespace WhatTheHack.Buildings
             {
                 textTimeout--;
             }
-            foreach(Building_TurretGun turret in controlledTurrets)
+            foreach(Building_TurretGunCE turret in controlledTurrets)
             {
                 if (turret.DestroyedOrNull())
                 {
@@ -379,7 +379,7 @@ namespace WhatTheHack.Buildings
             }
             int index = 1;
 
-            foreach (Building_TurretGun turret in controlledTurrets)
+            foreach (Building_TurretGunCE turret in controlledTurrets)
             {
                 yield return GetControlTurretCancelGizmo(turret, index);
                 index++;
@@ -681,7 +681,7 @@ namespace WhatTheHack.Buildings
             };
         }
 
-        private Gizmo GetControlTurretCancelGizmo(Building_TurretGun turret, int index)
+        private Gizmo GetControlTurretCancelGizmo(Building_TurretGunCE turret, int index)
         {
             Command_Action_Highlight command = new Command_Action_Highlight();
             command.defaultLabel = "WTH_Gizmo_ControlTurretCancel_Label".Translate() + index;
@@ -701,7 +701,7 @@ namespace WhatTheHack.Buildings
             return command;
         }
 
-        private void CancelControlTurret(Building_TurretGun turret)
+        private void CancelControlTurret(Building_TurretGunCE turret)
         {
             controlledTurrets.Remove(turret);
         }
@@ -728,7 +728,7 @@ namespace WhatTheHack.Buildings
             }
             command.action = delegate (LocalTargetInfo target)
             {
-                if (target.HasThing && target.Thing is Building_TurretGun turret)
+                if (target.HasThing && target.Thing is Building_TurretGunCE turret)
                 {            
                     DoAbility(delegate { controlledTurrets.Add(turret); }, 250);
                 }
@@ -750,7 +750,7 @@ namespace WhatTheHack.Buildings
                     }
                     Building building = targ.Thing as Building;
                     return building != null 
-                    && building is Building_TurretGun turret 
+                    && building is Building_TurretGunCE turret 
                     && turret.Faction == Faction.OfPlayer 
                     && Traverse.Create(turret).Field("mannableComp").GetValue<CompMannable>() == null;
                 }
@@ -864,7 +864,7 @@ namespace WhatTheHack.Buildings
             }
             while(rogueTurrets.Count > 0)
             {
-                Building_TurretGun turret = rogueTurrets.Last();
+                Building_TurretGunCE turret = rogueTurrets.Last();
                 turret.SetFaction(Faction.OfPlayer);
                 rogueTurrets.Remove(turret);
             }
@@ -929,13 +929,13 @@ namespace WhatTheHack.Buildings
         }
         private void GoRogue_HackTurrets()
         {
-            Predicate<Thing> isSuitableTurret = (Thing t) => t is Building_TurretGun turret && turret.Faction == Faction.OfPlayer && Traverse.Create(turret).Field("mannableComp").GetValue<CompMannable>() == null;
-            List<Building_TurretGun> turrets = this.Map.spawnedThings.Where((Thing thing) => isSuitableTurret(thing)).Cast<Building_TurretGun>().ToList();
+            Predicate<Thing> isSuitableTurret = (Thing t) => t is Building_TurretGunCE turret && turret.Faction == Faction.OfPlayer && Traverse.Create(turret).Field("mannableComp").GetValue<CompMannable>() == null;
+            List<Building_TurretGunCE> turrets = this.Map.spawnedThings.Where((Thing thing) => isSuitableTurret(thing)).Cast<Building_TurretGunCE>().ToList();
             int nShouldHack = Rand.Range(1, 3);
             int nHacked = 0;
             while (nShouldHack > 0 && turrets.Count > 0)
             {
-                Building_TurretGun turret = turrets.RandomElement();
+                Building_TurretGunCE turret = turrets.RandomElement();
                 turret.SetFaction(Faction.OfMechanoids);
                 nShouldHack--;
                 turrets.Remove(turret);

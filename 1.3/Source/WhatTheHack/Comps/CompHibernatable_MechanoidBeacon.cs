@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using Verse;
 using WhatTheHack.Buildings;
-
+using CombatExtended;
 namespace WhatTheHack.Comps
 {
     class CompHibernatable_MechanoidBeacon : CompHibernatable
